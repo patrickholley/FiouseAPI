@@ -19,36 +19,16 @@ namespace FiouseAPI.Controllers
             _context = context;
         }
 
-        // GET: api/LengthType
         [HttpGet]
-        public ActionResult<List<LengthType>> GetAll()
+        public ActionResult<List<LengthType>> Get()
         {
             return _context.LengthTypes.ToList();
         }
 
-        // GET: api/LengthType/5
         [HttpGet("{id}")]
         public LengthType Get(int id)
         {
             return _context.LengthTypes.Where(x => x.Id == id).Single();
-        }
-
-        // POST: api/LengthType
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT: api/LengthType/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }

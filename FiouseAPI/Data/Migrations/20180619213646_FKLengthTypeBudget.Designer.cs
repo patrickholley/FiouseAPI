@@ -3,14 +3,16 @@ using System;
 using FiouseAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FiouseAPI.Migrations
 {
     [DbContext(typeof(FiouseContext))]
-    partial class FiouseContextModelSnapshot : ModelSnapshot
+    [Migration("20180619213646_FKLengthTypeBudget")]
+    partial class FKLengthTypeBudget
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
