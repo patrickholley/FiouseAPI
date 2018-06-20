@@ -16,12 +16,12 @@ namespace FiouseAPI.Data
         public DbSet<Expense> Expenses { get; set; }
         public DbSet<LengthType> LengthTypes { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder) {
-            modelBuilder.Entity<Budget>()
-                .HasOne(b => b.LengthType)
-                .WithMany()
-                .HasForeignKey(b => b.LengthTypeId)
-                .HasConstraintName("FK_LengthType_Budget");
-        }
+        //protected override void OnModelCreating(ModelBuilder modelBuilder) {
+        //    modelBuilder.Entity<Budget>()
+        //        .HasOne(b => b.LengthType)
+        //        .WithMany()
+        //        .HasForeignKey(b => b.LengthTypeId)
+        //        .HasConstraintName("FK_LengthType_Budget");
+        //}
     }
 }

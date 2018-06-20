@@ -28,7 +28,7 @@ namespace FiouseAPI
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddDbContext<FiouseContext>(options => {
-                options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
+                options.UseSqlServer($"Server={Secrets.AzureSQLServer};User={Secrets.AzureSQLUser};Password={Secrets.AzureSQLPassword}");
             });
         }
 
