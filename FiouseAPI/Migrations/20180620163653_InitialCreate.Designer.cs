@@ -3,20 +3,23 @@ using System;
 using FiouseAPI.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FiouseAPI.Migrations
 {
     [DbContext(typeof(FiouseContext))]
-    [Migration("20180619174237_AutoIncrementAll")]
-    partial class AutoIncrementAll
+    [Migration("20180620163653_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.0-rtm-30799");
+                .HasAnnotation("ProductVersion", "2.1.0-rtm-30799")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("FiouseAPI.Models.Budget", b =>
                 {
@@ -55,7 +58,8 @@ namespace FiouseAPI.Migrations
             modelBuilder.Entity("FiouseAPI.Models.LengthType", b =>
                 {
                     b.Property<byte>("Id")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name");
 
@@ -69,6 +73,7 @@ namespace FiouseAPI.Migrations
                     b.HasOne("FiouseAPI.Models.LengthType", "LengthType")
                         .WithMany()
                         .HasForeignKey("LengthTypeId")
+                        .HasConstraintName("FK_LengthType_Budget")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

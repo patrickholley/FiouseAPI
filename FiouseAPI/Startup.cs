@@ -28,7 +28,15 @@ namespace FiouseAPI
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddDbContext<FiouseContext>(options => {
-                options.UseSqlServer($"Server={Secrets.AzureSQLServer};User={Secrets.AzureSQLUser};Password={Secrets.AzureSQLPassword}");
+                options.UseSqlServer($"Server=tcp:fiouse.database.windows.net,1433;" +
+                    $"Initial Catalog=FiouseAPI;" +
+                    $"Persist Security Info=False;" +
+                    $"User ID={Secrets.AzureSQLUser};" +
+                    $"Password={Secrets.AzureSQLPassword};" +
+                    $"MultipleActiveResultSets=False;" +
+                    $"Encrypt=True;" +
+                    $"TrustServerCertificate=False;" +
+                    $"Connection Timeout=30;");
             });
         }
 

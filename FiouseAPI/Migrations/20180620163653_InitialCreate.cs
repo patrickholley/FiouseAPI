@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FiouseAPI.Migrations
@@ -25,7 +26,8 @@ namespace FiouseAPI.Migrations
                 name: "LengthTypes",
                 columns: table => new
                 {
-                    Id = table.Column<byte>(nullable: false),
+                    Id = table.Column<byte>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -46,7 +48,7 @@ namespace FiouseAPI.Migrations
                 {
                     table.PrimaryKey("PK_Budgets", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Budgets_LengthTypes_LengthTypeId",
+                        name: "FK_LengthType_Budget",
                         column: x => x.LengthTypeId,
                         principalTable: "LengthTypes",
                         principalColumn: "Id",

@@ -17,6 +17,17 @@ namespace FiouseAPI.Controllers
 
         public LengthTypesController(FiouseContext context) {
             _context = context;
+
+            if (_context.LengthTypes.Count() == 0) {
+                _context.LengthTypes.Add(new LengthType { Name = "Weekly" });
+                _context.LengthTypes.Add(new LengthType { Name = "Biweekly" });
+                _context.LengthTypes.Add(new LengthType { Name = "Semimonthly" });
+                _context.LengthTypes.Add(new LengthType { Name = "Monthly" });
+                _context.LengthTypes.Add(new LengthType { Name = "Quarterly" });
+                _context.LengthTypes.Add(new LengthType { Name = "Semiannually" });
+                _context.LengthTypes.Add(new LengthType { Name = "Annually" });
+                _context.SaveChanges();
+            }
         }
 
         [HttpGet]
@@ -28,7 +39,7 @@ namespace FiouseAPI.Controllers
         [HttpGet("{id}")]
         public LengthType Get(int id)
         {
-            return _context.LengthTypes.Where(x => x.Id == id).Single();
+            return _context.LengthTypes.Where(l => l.Id == id).Single();
         }
     }
 }
