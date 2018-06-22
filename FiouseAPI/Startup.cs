@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace FiouseAPI
 {
@@ -27,6 +29,21 @@ namespace FiouseAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            string firebaseAuthority = $"https://securetoken.google.com/{Secrets.FirebaseDomain}/";
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options => {
+                    options.Authority = firebaseAuthority;
+                    options.TokenValidationParameters = new TokenValidationParameters {
+                        ValidateIssuer = true,
+                        ValidIssuer = firebaseAuthority,
+                        ValidateAudience = true,
+                        ValidAudience = Secrets.FirebaseDomain,
+                        ValidateLifetime = true
+                    };
+                });
+
             services.AddDbContext<FiouseContext>(options => {
                 options.UseSqlServer($"Server=tcp:fiouse.database.windows.net,1433;" +
                     $"Initial Catalog=FiouseAPI;" +
@@ -48,7 +65,14 @@ namespace FiouseAPI
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseMvc();
+            app.UseAuthentication();
+
+            app.UseMvc(routes => {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}"
+                );
+            });
         }
     }
 }

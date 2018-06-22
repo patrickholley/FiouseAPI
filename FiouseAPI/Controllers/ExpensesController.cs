@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using FiouseAPI.Data;
 using FiouseAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FiouseAPI.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ExpensesController : ControllerBase
@@ -30,6 +33,8 @@ namespace FiouseAPI.Controllers
         public ActionResult<List<Expense>> Get() {
             return _context.Expenses.ToList();
         }
+
+        // this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
         [HttpGet("{id}")]
         public Expense Get(Guid id) {
